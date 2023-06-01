@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type='range'] {
+  @apply appearance-none rounded-lg;
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &::-webkit-slider-thumb {
+    @apply appearance-none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 3px;
+    @apply rounded-sm bg-neutral-500;
+  }
+
+  &::-webkit-slider-thumb {
+    width: 10px;
+    height: 10px;
+    margin-top: calc(-1 * (10px - 3px) / 2);
+    @apply appearance-none rounded-full bg-green-600;
+  }
+}

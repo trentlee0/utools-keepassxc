@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": ["DOM", "ESNext"],
+    "outDir": "./dist",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+    "jsxImportSource": "nano-jsx/lib",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["utools-api-types", "node", "nprogress"]
+  },
+  "include": ["src/**/*", "vite.config.ts"]
+}

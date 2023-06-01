@@ -1,0 +1,37 @@
+{
+  "pluginName": "KeePassXC",
+  "author": "Trent0",
+  "homepage": "https://github.com/trentlee0",
+  "description": "通过 KeePassXC CLI 快速搜索 KeePass 数据库中的账号和密码并输入、生成密码",
+  "version": "1.0.0",
+  "logo": "logo.png",
+  "preload": "preload.js",
+  "features": [
+    {
+      "code": "keepass-search",
+      "explain": "搜索 KeePassXC 中的账号",
+      "cmds": [
+        "KeePassXC Search",
+        "KeePassXC 搜索",
+        "搜索账号密码"
+      ]
+    },
+    {
+      "code": "keepass-generator",
+      "explain": "使用 KeePassXC 生成密码",
+      "cmds": [
+        "KeePassXC Generator",
+        "KeePassXC 密码生成器",
+        "生成密码"
+      ]
+    },
+    {
+      "code": "keepass-setting",
+      "explain": "KeePassXC 设置",
+      "cmds": [
+        "KeePassXC Setting",
+        "KeePassXC 设置"
+      ]
+    }
+  ]
+}
