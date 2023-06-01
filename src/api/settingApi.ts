@@ -5,7 +5,8 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { local } from 'utools-utils/storage'
 
-const key = '57136759842934521243516046571823'.split('').map(parseInt)
+// @ts-ignore
+const key = import.meta.env.VITE_ENCRYPTION_KEY.split('').map(parseInt)
 
 export function getCompleteCLI(cli: string) {
   if (utools.isWindows()) return join(cli, 'keepassxc-cli.exe')
