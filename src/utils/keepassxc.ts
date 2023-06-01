@@ -106,7 +106,7 @@ export async function showEntry(
 }
 
 export function parseAccountEntry(stdout: string): AccountEntry {
-  const props = stdout.split('\n')
+  const props = stdout.replace(/\n$/, '').split('\n')
   const lineMap = {
     Title: 0,
     UserName: 1,
@@ -131,10 +131,10 @@ export function parseAccountEntry(stdout: string): AccountEntry {
     password: split('Password'),
     url: split('URL'),
     notes:
-      `${split('Notes')}\n` +
+      split('Notes') +
       props
         .filter((_value, index) => !set.has(index))
-        .reduce((pre, cur) => `${pre}\n${cur}`),
+        .reduce((pre, cur) => `${pre}\n${cur}`, ''),
     uuid: split('Uuid'),
     tags: split('Tags')
   }

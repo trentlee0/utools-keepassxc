@@ -161,7 +161,7 @@ export default class SearchFeature implements MutableListTemplate {
     try {
       const entry = await showEntry(this.getOptions(), item.entryName)
       if (!entry.username && !entry.password) {
-        utools.showNotification('备注：' + entry.notes)
+        utools.showNotification('没有用户名或密码。\n获取到备注：' + entry.notes)
       } else {
         await inputAccount(entry.username, entry.password)
       }
