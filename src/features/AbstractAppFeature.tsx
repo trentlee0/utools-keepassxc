@@ -1,5 +1,5 @@
-import { NoneTemplate } from 'utools-utils/template'
-import type { Action } from 'utools-utils/type'
+import { NoneTemplate } from 'utools-utils'
+import type { Action } from 'utools-utils'
 import { commonStore } from '@/store'
 import { render } from 'nano-jsx/lib/core'
 import App from '@/App'

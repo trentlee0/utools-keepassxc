@@ -1,8 +1,6 @@
-import type { Action, ListItem, ListRenderFunction } from 'utools-utils/type'
-import { searchList } from 'utools-utils/template'
-import { MutableListTemplate } from 'utools-utils/template'
+import type { Action, ListItem, ListRenderFunction } from 'utools-utils'
+import { searchList, MutableListTemplate, hideAndOutPlugin } from 'utools-utils'
 import {
-  entryList,
   showEntry,
   inputAccount,
   KeePassXCOptions,
@@ -12,10 +10,8 @@ import {
 import $ from 'cash-dom'
 import NProgress from '@/utils/nprogress'
 import { commonStore, settingStore } from '@/store'
-import { statSync } from 'node:fs'
 import { setTimeout } from 'node:timers/promises'
 import { getCompleteCLI } from '@/api/settingApi'
-import { hideAndOutPlugin } from 'utools-utils/common'
 
 interface SearchItem extends ListItem {
   description: string

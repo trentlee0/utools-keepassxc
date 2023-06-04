@@ -10,12 +10,12 @@
     "@babel/preset-env": "^7.22.4",
     "@babel/preset-typescript": "^7.21.5",
     "@jest/globals": "^29.5.0",
-    "@types/node": "^18.11.7",
+    "@types/node": "^18.16.16",
     "@types/nprogress": "^0.2.0",
     "autoprefixer": "^10.4.14",
     "babel-jest": "^29.5.0",
     "jest": "^29.5.0",
-    "postcss": "^8.4.23",
+    "postcss": "^8.4.24",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "sass": "^1.62.1",
@@ -29,6 +29,6 @@
     "cash-dom": "^8.1.5",
     "nano-jsx": "^0.0.37",
     "nprogress": "^0.2.0",
-    "utools-utils": "^1.1.4"
+    "utools-utils": "^1.1.6"
   }
 }

@@ -1,4 +1,4 @@
-import { templateBuilder } from 'utools-utils/template'
+import { templateBuilder } from 'utools-utils'
 import SearchFeature from '@/features/SearchFeature'
 import MatchFeature from './features/MatchFeature'
 import SettingFeature from '@/features/SettingFeature'
