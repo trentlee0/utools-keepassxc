@@ -16,7 +16,7 @@ function getArgs(options: Pick<KeePassXCOptions, 'database' | 'keyFile'>) {
   return args
 }
 
-export class SearchItem {
+export class EntryItem {
   constructor(
     public title: string,
     public group: string,
@@ -41,7 +41,7 @@ export async function searchEntries(
     const n = levels.length
     const title = levels[n - 1]
     const group = levels.slice(0, n - 1).join('/')
-    return new SearchItem(title, group, entry)
+    return new EntryItem(title, group, entry)
   })
 }
 

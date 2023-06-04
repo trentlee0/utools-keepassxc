@@ -9,11 +9,36 @@
   "features": [
     {
       "code": "keepass-search",
-      "explain": "搜索 KeePassXC 中的账号",
+      "explain": "搜索 KeePassXC 中所有的账号",
       "cmds": [
         "KeePassXC Search",
         "KeePassXC 搜索",
         "搜索账号密码"
+      ]
+    },
+    {
+      "code": "keepass-match",
+      "explain": "搜索 KeePassXC 中当前网站的账号",
+      "cmds": [
+        {
+          "type": "window",
+          "label": "搜索当前网站的账号",
+          "match": {
+            "app": [
+              "chrome.exe",
+              "msedge.exe",
+              "firefox.exe",
+              "opera.exe",
+              "brave.exe",
+              "Safari.app",
+              "Google Chrome.app",
+              "Microsoft Edge.app",
+              "Firefox.app",
+              "Opera.app",
+              "Brave Browser.app"
+            ]
+          }
+        }
       ]
     },
     {
