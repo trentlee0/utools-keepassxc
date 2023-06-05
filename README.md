@@ -1,10 +1,20 @@
 # utools-keepassxc
 
-一个 uTools 插件，通过 KeePassXC CLI 快速搜索 KeePass 数据库中的账号和密码并输入、生成密码。
+一个 KeePassXC 的 uTools 插件，通过 KeePassXC CLI 快速搜索 KeePass 数据库中的账号和密码并输入、生成密码。
 
 ## 安装
 
 在 uTools 插件应用市场搜索“KeePassXC”下载。
+
+## 特性
+
+1. 根据标题或群组进行搜索
+
+2. 支持多关键词搜索，使用空格分开
+
+3. 搜索当前网站下的账号
+
+4. 密码生成器
 
 ## 配置
 
@@ -16,15 +26,9 @@
    - KeePassXC 位置
 3. 可以使用啦
 
-## 搜索
-
-- 根据标题或群组进行搜索
-
-- 支持多关键词搜索，使用空格分开
-
 ## 快捷键
 
-- 自动输入（有用户名或密码）：`Enter`
+- 自动输入（如有用户名或密码）：`Enter`
 - 复制用户名：`Ctrl`/`Cmd` + `B`
 - 复制密码：`Ctrl`/`Cmd` + `C`
 - 复制 URL：`Ctrl`/`Cmd` + `U`
