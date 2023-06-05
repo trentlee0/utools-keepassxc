@@ -12,6 +12,7 @@ import NProgress from '@/utils/nprogress'
 import { commonStore, settingStore } from '@/store'
 import { setTimeout } from 'node:timers/promises'
 import { getCompleteCLI } from '@/api/settingApi'
+import { getMessage } from '@/utils/common'
 
 interface SearchItem extends ListItem {
   description: string
@@ -132,10 +133,10 @@ export default abstract class AbstractListFeature
           entryName
         }))
       )
-      NProgress.done()
     } catch (err) {
-      utools.showNotification('获取账号列表失败：' + err)
+      utools.showNotification('获取账号列表失败：' + getMessage(err))
     }
+    NProgress.done()
   }
 
   search(action: Action, searchWord: string, render: ListRenderFunction) {

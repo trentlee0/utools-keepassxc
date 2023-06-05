@@ -40,3 +40,10 @@ export function decrypt(encrypted: string, key: number[]) {
   }
   return res
 }
+
+export function getMessage(err: unknown): string {
+  if (err instanceof Error) {
+    return err.message
+  }
+  return err + ''
+}

@@ -1,5 +1,6 @@
 import { spawnCommand } from 'utools-utils/preload'
 import { setTimeout } from 'node:timers/promises'
+import { getMessage } from './common'
 
 export interface KeePassXCOptions {
   cli: string
@@ -8,12 +9,50 @@ export interface KeePassXCOptions {
   keyFile?: string
 }
 
-function getArgs(options: Pick<KeePassXCOptions, 'database' | 'keyFile'>) {
-  const { keyFile, database } = options
-  const args: string[] = []
-  if (keyFile) args.push('--key-file', keyFile)
-  args.push(database)
-  return args
+function getArg(
+  condition: any,
+  name: string,
+  ...values: Array<string | undefined>
+): string[] {
+  if (!condition) return []
+  const arr: string[] = [name]
+  for (const value of values) {
+    if (value !== undefined) arr.push(value)
+  }
+  return arr
+}
+
+async function runKeePassCLI(
+  options: KeePassXCOptions,
+  subCommand: string,
+  ...extraArgs: string[]
+) {
+  const { cli, password, keyFile, database } = options
+
+  try {
+    const { stdout } = await spawnCommand(
+      cli,
+      [
+        subCommand,
+        database,
+        ...getArg(keyFile, '--key-file', keyFile),
+        ...extraArgs
+      ],
+      {},
+      [password]
+    )
+    return stdout
+  } catch (err) {
+    const message = getMessage(err)
+      .split('\n')
+      .filter(
+        (item) =>
+          !item.startsWith('输入密码以解锁') &&
+          !item.startsWith('Enter password to unlock')
+      )
+      .join('\n')
+    throw new Error(message)
+  }
 }
 
 export class EntryItem {
@@ -28,14 +67,8 @@ export async function searchEntries(
   options: KeePassXCOptions,
   keyword: string
 ) {
-  const { cli, password } = options
-  const { stdout: value } = await spawnCommand(
-    cli,
-    ['search', ...getArgs(options), keyword],
-    {},
-    [password]
-  )
-  const entries = value.trim().split('\n')
+  const stdout = await runKeePassCLI(options, 'search', keyword)
+  const entries = stdout.trim().split('\n')
   return entries.map((entry) => {
     const levels = entry.substring(1).split('/')
     const n = levels.length
@@ -82,25 +115,21 @@ export async function showEntry(
   entryName: string,
   attribute?: ExtendedAttribute
 ) {
-  const { cli, password } = options
   if (attribute) {
-    const extraArgs = [
+    const stdout = await runKeePassCLI(
+      options,
+      'show',
+      entryName,
       ...(attribute === 'totp' ? ['--totp'] : ['--attributes', attribute])
-    ]
-    const { stdout } = await spawnCommand(
-      cli,
-      ['show', ...getArgs(options), entryName, ...extraArgs],
-      {},
-      [password]
     )
     return stdout.trimEnd()
   }
 
-  const { stdout } = await spawnCommand(
-    cli,
-    ['show', ...getArgs(options), entryName, '--show-protected'],
-    {},
-    [password]
+  const stdout = await runKeePassCLI(
+    options,
+    'show',
+    entryName,
+    '--show-protected'
   )
   return parseAccountEntry(stdout)
 }
@@ -145,12 +174,12 @@ export async function clipEntryAttr(
   entryName: string,
   attribute: string
 ) {
-  const { cli, password } = options
-  const { stdout } = await spawnCommand(
-    cli,
-    ['clip', ...getArgs(options), entryName, '--attribute', attribute],
-    {},
-    [password]
+  const stdout = await runKeePassCLI(
+    options,
+    'clip',
+    entryName,
+    '--attribute',
+    attribute
   )
   return stdout.trim()
 }
@@ -177,15 +206,17 @@ export async function generatePassword(
   keePassXCCLI: string,
   rules: GenerationRules
 ) {
-  const args: string[] = []
-  if (rules.length) args.push('--length', rules.length.toString())
-  if (rules.lower) args.push('--lower')
-  if (rules.upper) args.push('--upper')
-  if (rules.numeric) args.push('--numeric')
-  if (rules.special) args.push('--special')
-  if (rules.extended) args.push('--extended')
-  if (rules.exclude) args.push('--exclude', rules.exclude)
-  if (rules.custom) args.push('--custom', rules.custom)
+  const args: string[] = [
+    ...getArg(rules.length, '--length', rules.length?.toString()),
+    ...getArg(rules.lower, '--lower'),
+    ...getArg(rules.upper, '--upper'),
+    ...getArg(rules.numeric, '--numeric'),
+    ...getArg(rules.special, '--special'),
+    ...getArg(rules.extended, '--extended'),
+    ...getArg(rules.exclude, '--exclude', rules.exclude),
+    ...getArg(rules.custom, '--custom', rules.custom)
+  ]
+
   const { stdout } = await spawnCommand(keePassXCCLI, ['generate', ...args])
   return stdout.trim()
 }
