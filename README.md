@@ -4,7 +4,7 @@
 
 ## 安装
 
-在 uTools 插件应用市场搜索“KeePassXC”下载。
+在 [Releases](https://github.com/trentlee0/utools-keepassxc/releases) 页面下载。
 
 ## 特性
 
