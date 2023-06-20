@@ -21,21 +21,28 @@ export function blankPropSize<T extends object>(obj: T) {
   return propSize(obj, (value) => value === '')
 }
 
-export function encrypt(message: string, key: number[]) {
+function convertKey(key: number[] | string): number[] {
+  if (typeof key === 'string') return key.split('').map(parseInt)
+  return key
+}
+
+export function encrypt(message: string, key: string) {
+  const keyArr = convertKey(key)
   let res = ''
   for (let i = 0; i < message.length; i++) {
     const m = message.charCodeAt(i)
-    const k = key[i % key.length]
+    const k = keyArr[i % key.length]
     res += String.fromCharCode(m ^ k)
   }
   return res
 }
 
-export function decrypt(encrypted: string, key: number[]) {
+export function decrypt(encrypted: string, key: string) {
+  const keyArr = convertKey(key)
   let res = ''
   for (let i = 0; i < encrypted.length; i++) {
     const e = encrypted.charCodeAt(i)
-    const k = key[i % key.length]
+    const k = keyArr[i % key.length]
     res += String.fromCharCode(e ^ k)
   }
   return res

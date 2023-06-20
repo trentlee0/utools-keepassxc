@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import { storage } from 'utools-utils'
 
 // @ts-ignore
-const key = import.meta.env.VITE_ENCRYPTION_KEY.split('').map(parseInt)
+const key = import.meta.env.VITE_ENCRYPTION_KEY
 
 export function getCompleteCLI(cli: string) {
   if (utools.isWindows()) return join(cli, 'keepassxc-cli.exe')

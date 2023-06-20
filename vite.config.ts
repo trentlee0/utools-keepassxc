@@ -11,7 +11,7 @@ export default defineConfig({
     })
   ],
   build: {
-    minify: false,
+    minify: true,
     rollupOptions: {
       external: [/^node:/],
       input: {
@@ -20,7 +20,12 @@ export default defineConfig({
       },
       output: {
         format: 'cjs',
-        entryFileNames: '[name].js'
+        entryFileNames: '[name].js',
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
+        }
       }
     }
   },
