@@ -3,7 +3,7 @@ import { SettingModel } from '@/store'
 import { decrypt, encrypt } from '@/utils/common'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { storage } from 'utools-utils'
+import { local } from 'utools-utils'
 
 // @ts-ignore
 const key = import.meta.env.VITE_ENCRYPTION_KEY
@@ -27,7 +27,7 @@ function getInitialCLI() {
 }
 
 export function initSetting() {
-  let setting = storage.local.get<SettingModel>(StoreKey.SETTING)
+  let setting = local.get<SettingModel>(StoreKey.SETTING)
   if (setting === null) {
     setting = {
       version: 1,
@@ -37,7 +37,7 @@ export function initSetting() {
       keyFile: '',
       cli: getInitialCLI()
     }
-    storage.local.set(StoreKey.SETTING, setting)
+    local.set(StoreKey.SETTING, setting)
   }
   setting.password = decrypt(setting.password, key)
   return setting
@@ -45,5 +45,5 @@ export function initSetting() {
 
 export function saveSetting(setting: SettingModel) {
   setting.password = encrypt(setting.password, key)
-  storage.local.set(StoreKey.SETTING, setting)
+  local.set(StoreKey.SETTING, setting)
 }

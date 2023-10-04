@@ -1,5 +1,10 @@
 import type { Action, ListItem, ListRenderFunction } from 'utools-utils'
-import { searchList, MutableListTemplate, hideAndOutPlugin } from 'utools-utils'
+import {
+  MutableListTemplate,
+  entitySearcher,
+  hideAndOutPlugin,
+  searchList
+} from 'utools-utils'
 import {
   showEntry,
   inputAccount,
@@ -13,6 +18,7 @@ import { commonStore, settingStore } from '@/store'
 import { setTimeout } from 'node:timers/promises'
 import { getCompleteCLI } from '@/api/settingApi'
 import { getMessage } from '@/utils/common'
+import { match } from 'pinyin-pro'
 
 interface SearchItem extends ListItem {
   description: string
@@ -140,12 +146,15 @@ export default abstract class AbstractListFeature
   }
 
   search(action: Action, searchWord: string, render: ListRenderFunction) {
-    if (searchWord) {
-      const words = searchWord.split(/ +/).filter((value) => value)
-      render(searchList(this.$list, words))
-    } else {
-      render(this.$list)
-    }
+    render(
+      searchList(this.$list, searchWord.split(/ +/), (item, word) => {
+        return (
+          match(item.title, word) ||
+          (item.description && match(item.description, word)) ||
+          entitySearcher<ListItem>(word, ['title', 'description'])(item, word)
+        )
+      })
+    )
   }
 
   async select(action: Action, item: SearchItem) {

@@ -14,13 +14,14 @@ specifiers:
   jest: ^29.5.0
   nano-jsx: ^0.0.37
   nprogress: ^0.2.0
+  pinyin-pro: ^3.16.7
   postcss: ^8.4.24
   prettier: ^2.8.8
   prettier-plugin-tailwindcss: ^0.3.0
   sass: ^1.62.1
   tailwindcss: ^3.3.2
   utools-api-types: ^3.0.0
-  utools-utils: ^1.1.6
+  utools-utils: ^1.1.12
   vite: ^4.3.9
   vite-plugin-inject-css-to-file: ^1.0.0
 
@@ -29,7 +30,8 @@ dependencies:
   cash-dom: 8.1.5
   nano-jsx: 0.0.37
   nprogress: 0.2.0
-  utools-utils: 1.1.6
+  pinyin-pro: 3.16.7
+  utools-utils: 1.1.12
 
 devDependencies:
   '@babel/core': 7.22.1
@@ -2203,7 +2205,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /ci-info/3.8.0:
@@ -2487,8 +2489,8 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
 
-  /fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents/2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -2871,7 +2873,7 @@ packages:
       micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /jest-leak-detector/29.5.0:
@@ -3386,6 +3388,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /pinyin-pro/3.16.7:
+    resolution: {integrity: sha512-E5LoVzx66aZEria1D99e0eYQJAxgHHysLvbPpMf58bcCuFFVAgbeYI4vysMrZbgEf3IOJ6RXgm4YD7ZGHqbWGQ==}
+    dev: false
+
   /pirates/4.0.5:
     resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==}
     engines: {node: '>= 6'}
@@ -3652,7 +3658,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /run-parallel/1.2.0:
@@ -3942,8 +3948,8 @@ packages:
     resolution: {integrity: sha512-KJYytaX/cnxRTm+fBKeDAV6PhE1Emrv4bZm/6pigVhxEM4StAy8UFGyo22bVARSRIUUxbEdtWIo6O7qmEGnv5A==}
     dev: true
 
-  /utools-utils/1.1.6:
-    resolution: {integrity: sha512-tcXLXhpw/q+HEF1/VR4g5bhuF7VDbB3SPQIVx2lwY0vH1aA37MjPicRPFdV2VvlXXpFANFP2hC9DJ82GBKOysg==}
+  /utools-utils/1.1.12:
+    resolution: {integrity: sha512-Wtan+G6n3f/6rdD/8eBcJEIDJED/OHlCvpABZRFYnU4y0hPEU+iD70JG3G0kCIhfHTM2HVT/X9l3DCntgK5LRw==}
     dev: false
 
   /v8-to-istanbul/9.1.0:
@@ -3994,7 +4000,7 @@ packages:
       rollup: 3.23.0
       sass: 1.62.1
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /walker/1.0.8:

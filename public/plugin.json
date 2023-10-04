@@ -13,7 +13,17 @@
       "cmds": [
         "KeePassXC Search",
         "KeePassXC 搜索",
-        "搜索账号密码"
+        "搜索账号密码",
+        {
+          "type": "window",
+          "label": "KeePassXC 搜索",
+          "match": {
+            "app": [
+              "KeePassXC.exe",
+              "KeePassXC.app"
+            ]
+          }
+        }
       ]
     },
     {

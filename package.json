@@ -29,6 +29,7 @@
     "cash-dom": "^8.1.5",
     "nano-jsx": "^0.0.37",
     "nprogress": "^0.2.0",
-    "utools-utils": "^1.1.6"
+    "pinyin-pro": "^3.16.7",
+    "utools-utils": "^1.1.12"
   }
 }

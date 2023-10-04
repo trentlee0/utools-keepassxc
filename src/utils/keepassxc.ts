@@ -38,8 +38,8 @@ async function runKeePassCLI(
         ...getArg(keyFile, '--key-file', keyFile),
         ...extraArgs
       ],
-      {},
-      [password]
+      [password],
+      {}
     )
     return stdout
   } catch (err) {
@@ -231,7 +231,7 @@ export async function inputAccount(username?: string, password?: string) {
   } else {
     utools.hideMainWindowTypeString(username)
     utools.simulateKeyboardTap('tab')
-    await setTimeout(5)
+    await setTimeout(50)
     utools.hideMainWindowTypeString(password)
   }
 }

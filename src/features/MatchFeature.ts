@@ -14,7 +14,9 @@ export default class MatchFeature extends AbstractListFeature {
     const url = await utools.readCurrentBrowserUrl()
     const mat = url.match(/(http[s]?:\/\/)([^/]+).*/)
     if (mat) {
-      return await searchEntries(this.getOptions(), mat[2])
+      const arr = mat[2].split('.')
+      const host = arr.slice(Math.max(0, arr.length - 2), arr.length).join('.')
+      return await searchEntries(this.getOptions(), host)
     }
     return []
   }
