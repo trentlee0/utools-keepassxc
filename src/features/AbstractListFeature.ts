@@ -10,7 +10,8 @@ import {
   inputAccount,
   KeePassXCOptions,
   ExtendedAttribute,
-  EntryItem
+  EntryItem,
+  searchInApp
 } from '@/utils/keepassxc'
 import $ from 'cash-dom'
 import NProgress from '@/utils/nprogress'
@@ -30,9 +31,12 @@ export default abstract class AbstractListFeature
 {
   code: string
   $list: Array<SearchItem> = []
+  placeholder = '搜索账号，多个关键词用空格隔开'
 
   settingStore = settingStore.use()
   commonStore = commonStore.use()
+
+  isMetaEnterKey = false
 
   constructor(code: string) {
     this.code = code
@@ -43,6 +47,7 @@ export default abstract class AbstractListFeature
     window.addEventListener('keydown', async (e) => {
       if (this.commonStore.state.code !== this.code) return
 
+      this.isMetaEnterKey = e.metaKey && e.key === 'Enter'
       const isModifier = () => (utools.isMacOS() ? e.metaKey : e.ctrlKey)
       if (!isModifier()) return
       const getEntryName = () => {
@@ -148,16 +153,28 @@ export default abstract class AbstractListFeature
   search(action: Action, searchWord: string, render: ListRenderFunction) {
     render(
       searchList(this.$list, searchWord.split(/ +/), (item, word) => {
+        const ex = /["'](.*)['"]/.exec(word)
+        let isExact = false
+        if (ex) {
+          word = ex[1]
+          isExact = true
+        }
         return (
-          match(item.title, word) ||
-          (item.description && match(item.description, word)) ||
-          entitySearcher<ListItem>(word, ['title', 'description'])(item, word)
+          (!isExact &&
+            (match(item.title, word) ||
+              (item.description && match(item.description, word)))) ||
+          entitySearcher<ListItem>(['title', 'description'])(item, word)
         )
       })
     )
   }
 
   async select(action: Action, item: SearchItem) {
+    if (this.isMetaEnterKey && utools.isMacOS()) {
+      utools.hideMainWindow()
+      searchInApp(item.title, settingStore.state.password)
+      return
+    }
     try {
       const entry = await showEntry(this.getOptions(), item.entryName)
       if (!entry.username && !entry.password) {

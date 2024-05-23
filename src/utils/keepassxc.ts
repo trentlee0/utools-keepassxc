@@ -1,4 +1,4 @@
-import { spawnCommand } from 'utools-utils/preload'
+import { execAppleScript, spawnCommand } from 'utools-utils/preload'
 import { setTimeout } from 'node:timers/promises'
 import { getMessage } from './common'
 
@@ -234,4 +234,31 @@ export async function inputAccount(username?: string, password?: string) {
     await setTimeout(50)
     utools.hideMainWindowTypeString(password)
   }
+}
+
+export async function searchInApp(searchText: string, password: string) {
+  const script = `
+    tell application "System Events"
+      if (name of processes) does not contain "KeePassXC" then
+        do shell script "open -a KeePassXC"
+        repeat until processes where name is not (exists "KeePassXC")
+        end repeat
+      end if
+      do shell script "open -a KeePassXC"
+      tell application "KeePassXC" to activate
+  
+      tell process "KeePassXC"
+        if (title of window 1) is equal to "KeePassXC" then
+          click menu item 1 of menu "最近的数据库" of menu item "最近的数据库" of menu "数据库" of menu bar item "数据库" of menu bar 1
+          delay 0.5
+        end if
+        if (title of window 1) contains "锁定" then
+          keystroke "${password}"
+          key code 76
+          delay 0.5
+        end if
+        set value of text field 1 of window 1 to "${searchText}"
+      end tell
+    end tell`
+  await execAppleScript(script)
 }

@@ -21,7 +21,7 @@ specifiers:
   sass: ^1.62.1
   tailwindcss: ^3.3.2
   utools-api-types: ^3.0.0
-  utools-utils: ^1.1.12
+  utools-utils: ^1.1.13
   vite: ^4.3.9
   vite-plugin-inject-css-to-file: ^1.0.0
 
@@ -31,7 +31,7 @@ dependencies:
   nano-jsx: 0.0.37
   nprogress: 0.2.0
   pinyin-pro: 3.16.7
-  utools-utils: 1.1.12
+  utools-utils: 1.1.13
 
 devDependencies:
   '@babel/core': 7.22.1
@@ -3948,8 +3948,8 @@ packages:
     resolution: {integrity: sha512-KJYytaX/cnxRTm+fBKeDAV6PhE1Emrv4bZm/6pigVhxEM4StAy8UFGyo22bVARSRIUUxbEdtWIo6O7qmEGnv5A==}
     dev: true
 
-  /utools-utils/1.1.12:
-    resolution: {integrity: sha512-Wtan+G6n3f/6rdD/8eBcJEIDJED/OHlCvpABZRFYnU4y0hPEU+iD70JG3G0kCIhfHTM2HVT/X9l3DCntgK5LRw==}
+  /utools-utils/1.1.13:
+    resolution: {integrity: sha512-2vCiqqNTRGgB4awRkHlqKBmvstdjatTu1U//JTqSKvKN1oyfQGDvMjZRE2oAqfWW0P+JlhwEbnGDz0FHojssWQ==}
     dev: false
 
   /v8-to-istanbul/9.1.0:
