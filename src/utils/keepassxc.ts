@@ -56,11 +56,21 @@ async function runKeePassCLI(
 }
 
 export class EntryItem {
-  constructor(
-    public title: string,
-    public group: string,
-    public entryName: string
-  ) {}
+  title: string
+  group: string
+  entryName: string
+
+  constructor(entryName: string) {
+    this.entryName = entryName
+    const levels = entryName.substring(1).split('/')
+    const n = levels.length
+    this.title = levels[n - 1]
+    this.group = levels.slice(0, n - 1).join('/')
+  }
+
+  static generateEntryName(title: string, group?: string) {
+    return group ? `/${group}/${title}` : `/${title}`
+  }
 }
 
 export async function searchEntries(
@@ -69,13 +79,7 @@ export async function searchEntries(
 ) {
   const stdout = await runKeePassCLI(options, 'search', keyword)
   const entries = stdout.trim().split('\n')
-  return entries.map((entry) => {
-    const levels = entry.substring(1).split('/')
-    const n = levels.length
-    const title = levels[n - 1]
-    const group = levels.slice(0, n - 1).join('/')
-    return new EntryItem(title, group, entry)
-  })
+  return entries.map((entry) => new EntryItem(entry))
 }
 
 export function entryList(options: KeePassXCOptions) {
@@ -202,11 +206,8 @@ export interface GenerationRules {
   custom?: string
 }
 
-export async function generatePassword(
-  keePassXCCLI: string,
-  rules: GenerationRules
-) {
-  const args: string[] = [
+function getPasswordArgs(rules: GenerationRules) {
+  return [
     ...getArg(rules.length, '--length', rules.length?.toString()),
     ...getArg(rules.lower, '--lower'),
     ...getArg(rules.upper, '--upper'),
@@ -216,9 +217,60 @@ export async function generatePassword(
     ...getArg(rules.exclude, '--exclude', rules.exclude),
     ...getArg(rules.custom, '--custom', rules.custom)
   ]
+}
 
-  const { stdout } = await spawnCommand(keePassXCCLI, ['generate', ...args])
+export async function generatePassword(
+  keePassXCCLI: string,
+  rules: GenerationRules
+) {
+  const { stdout } = await spawnCommand(keePassXCCLI, [
+    'generate',
+    ...getPasswordArgs(rules)
+  ])
   return stdout.trim()
+}
+
+export interface AccountInfo {
+  title: string
+  group: string
+  username?: string
+  url?: string
+  notes?: string
+}
+
+export async function operateEntry(
+  command: 'add' | 'edit',
+  options: KeePassXCOptions,
+  account: AccountInfo,
+  passwordRules?: GenerationRules
+) {
+  const entryName = EntryItem.generateEntryName(account.title, account.group)
+  const stdout = await runKeePassCLI(
+    options,
+    command,
+    entryName,
+    ...getArg(account.username, '--username', account.username),
+    ...getArg(account.url, '--url', account.url),
+    ...getArg(account.notes, '--notes', account.notes),
+    ...(passwordRules ? ['--generate', ...getPasswordArgs(passwordRules)] : [])
+  )
+  return { stdout, entryName }
+}
+
+export async function addEntry(
+  options: KeePassXCOptions,
+  account: AccountInfo,
+  passwordRules?: GenerationRules
+) {
+  return await operateEntry('add', options, account, passwordRules)
+}
+
+export async function editEntry(
+  options: KeePassXCOptions,
+  account: AccountInfo,
+  passwordRules?: GenerationRules
+) {
+  return await operateEntry('edit', options, account, passwordRules)
 }
 
 export async function inputAccount(username?: string, password?: string) {

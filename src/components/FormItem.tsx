@@ -1,15 +1,22 @@
 import { Component } from 'nano-jsx/lib/component'
 import { Fragment } from 'nano-jsx/lib/fragment'
 
-export enum AlignMap {
-  left = 'text-left',
+export enum HorizontalMap {
+  left = 'justify-start',
   center = 'text-center',
-  right = 'text-right'
+  right = 'justify-end'
+}
+
+export enum VerticalMap {
+  top = 'items-start',
+  center = 'items-center',
+  bottom = 'items-bottom'
 }
 
 export interface FormItemProps {
   label?: string
-  align?: keyof typeof AlignMap
+  horizontal?: keyof typeof HorizontalMap
+  vertical?: keyof typeof VerticalMap
   errMsg?: boolean | string
   required?: boolean
   help?: string
@@ -23,10 +30,25 @@ export default class FormItem extends Component<FormItemProps> {
   }
 
   render() {
-    const { align = 'right', title, label, help, required, errMsg } = this.props
+    const {
+      horizontal = 'right',
+      vertical = 'center',
+      title,
+      label,
+      help,
+      required,
+      errMsg
+    } = this.props
     return (
       <Fragment>
-        <div class={'col-span-4 cursor-default select-none ' + AlignMap[align]}>
+        <div
+          class={
+            'col-span-4 flex h-full cursor-default select-none ' +
+            HorizontalMap[horizontal] +
+            ' ' +
+            VerticalMap[vertical]
+          }
+        >
           <span title={title}>{label}</span>
           {help ? (
             <span
@@ -37,7 +59,7 @@ export default class FormItem extends Component<FormItemProps> {
             </span>
           ) : null}
           {required ? (
-            <span class="ml-px text-sm text-neutral-400">*</span>
+            <span class="ml-px text-sm text-red-400">*</span>
           ) : null}
         </div>
         <div class="col-span-5">{this.props.children}</div>

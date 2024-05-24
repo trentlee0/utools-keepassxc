@@ -1,7 +1,6 @@
 import { Component } from 'nano-jsx/lib/component'
 import { Fragment } from 'nano-jsx/lib/fragment'
 import { getCompleteCLI } from '@/api/settingApi'
-import Button from '@/components/Button'
 import Icon from '@/components/Icon'
 import TextField from '@/components/TextField'
 import { settingStore } from '@/store'
@@ -12,26 +11,8 @@ import {
   mdiEyeOutline,
   mdiRefresh
 } from '@mdi/js'
+import SelectButton from '@/components/SelectButton'
 
-function SelectButton(props: {
-  children: string
-  selected?: boolean
-  onClick?: (v: boolean) => void
-}) {
-  return (
-    <Button
-      class={
-        'mx-1 ' +
-        (props.selected
-          ? 'bg-green-600 text-white'
-          : 'bg-neutral-200 text-black')
-      }
-      onClick={() => props.onClick?.(!props.selected)}
-    >
-      {props.children}
-    </Button>
-  )
-}
 
 interface GenerateState {
   showPassword: boolean

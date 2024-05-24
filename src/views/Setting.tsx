@@ -140,7 +140,6 @@ export default class Setting extends Component {
   render() {
     return (
       <Fragment>
-        <div class="mb-16 ml-2 text-lg">设置</div>
         <Form>
           <FormItem label="数据库" required>
             <div

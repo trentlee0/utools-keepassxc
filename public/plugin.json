@@ -61,6 +61,15 @@
       ]
     },
     {
+      "code": "keepass-entry",
+      "explain": "使用 KeePassXC 添加账号",
+      "cmds": [
+        "KeePassXC Add Account",
+        "KeePassXC 添加账号",
+        "添加账号"
+      ]
+    },
+    {
       "code": "keepass-setting",
       "explain": "KeePassXC 设置",
       "cmds": [

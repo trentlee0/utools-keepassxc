@@ -1,6 +1,7 @@
 import { Component } from 'nano-jsx/lib/component'
 
 export enum ButtonType {
+  small = ' rounded-md',
   normal = 'py-1 px-3 rounded-md',
   circle = 'p-2 rounded-full',
   float = 'p-2 rounded-full fixed right-8 bottom-6'

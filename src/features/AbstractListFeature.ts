@@ -15,9 +15,8 @@ import {
 } from '@/utils/keepassxc'
 import $ from 'cash-dom'
 import NProgress from '@/utils/nprogress'
-import { commonStore, settingStore } from '@/store'
+import { commonStore, getKeePassXCOptions, settingStore } from '@/store'
 import { setTimeout } from 'node:timers/promises'
-import { getCompleteCLI } from '@/api/settingApi'
 import { getMessage } from '@/utils/common'
 import { match } from 'pinyin-pro'
 
@@ -53,7 +52,7 @@ export default abstract class AbstractListFeature
       const getEntryName = () => {
         const title = $('.list-item-selected .list-item-title').text()
         const desc = $('.list-item-selected .list-item-description').text()
-        return `/${desc}/${title}`
+        return EntryItem.generateEntryName(title, desc)
       }
       const entryName = getEntryName()
       if (e.key === 'b') {
@@ -87,11 +86,7 @@ export default abstract class AbstractListFeature
   }
 
   getOptions(): KeePassXCOptions {
-    return {
-      ...this.settingStore.state,
-      password: this.commonStore.state.password,
-      cli: this.commonStore.state.completeCLI
-    }
+    return getKeePassXCOptions(this.settingStore, this.commonStore)
   }
 
   abstract useCache(): Promise<boolean>
@@ -117,9 +112,9 @@ export default abstract class AbstractListFeature
     // 未注入 NProgress 的样式
     if (!$('head style').is('#np-style')) {
       $('head').prepend(`<style id="np-style">${NProgress.cssInline}</style>`)
-      // 隐藏自定义页面
-      $('#app').css('display', 'none')
     }
+    // 隐藏自定义页面
+    $('#app').css('display', 'none')
 
     NProgress.start()
 
@@ -130,12 +125,8 @@ export default abstract class AbstractListFeature
       return
     }
 
-    try {
-      // 刷新命令行的路径
-      this.commonStore.setState({
-        ...this.commonStore.state,
-        completeCLI: getCompleteCLI(this.settingStore.state.cli)
-      })
+    try {      
+
       const list = await this.getEntryList()
       render(
         list.map(({ title, group, entryName }) => ({
