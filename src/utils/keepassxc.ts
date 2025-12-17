@@ -288,6 +288,10 @@ export async function inputAccount(username?: string, password?: string) {
   }
 }
 
+export function inputText(text: string) {
+  utools.hideMainWindowTypeString(text)
+}
+
 export async function searchInApp(searchText: string, password: string) {
   const script = `
     tell application "System Events"
@@ -313,4 +317,15 @@ export async function searchInApp(searchText: string, password: string) {
       end tell
     end tell`
   await execAppleScript(script)
+}
+
+export async function getWindowTitle(process: string, window: number = 1): Promise<string> {
+    const script = `
+    tell application "System Events"
+      tell process "${process}"
+        return title of window ${window}
+      end tell
+    end tell`
+  const { stdout } = await execAppleScript(script)
+  return stdout.trim()
 }

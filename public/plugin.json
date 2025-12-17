@@ -40,12 +40,14 @@
               "firefox.exe",
               "opera.exe",
               "brave.exe",
+              "zen.exe",
               "Safari.app",
               "Google Chrome.app",
               "Microsoft Edge.app",
               "Firefox.app",
               "Opera.app",
-              "Brave Browser.app"
+              "Brave Browser.app",
+              "Zen.app"
             ]
           }
         }
