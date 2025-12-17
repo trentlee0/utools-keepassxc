@@ -124,7 +124,6 @@ export default abstract class AbstractListFeature
 
   private async inputEntryAttr(entryName: string, attribute: ExtendedAttribute) {
     try {
-      utools.hideMainWindow()
       const s = await this.getEntryAttr(entryName, attribute)
       if (!s) {
         utools.showNotification(`“${entryName}”的${this.mapAttrToChinese(attribute)}为空！`)
@@ -139,6 +138,10 @@ export default abstract class AbstractListFeature
   private async copyEntryAttr(entryName: string, attribute: ExtendedAttribute) {
     try {
       const s = await this.getEntryAttr(entryName, attribute)
+      if (!s) {
+        utools.showNotification(`“${entryName}”的${this.mapAttrToChinese(attribute)}为空！`)
+        return
+      }
       utools.copyText(s)
       utools.hideMainWindow()
     } catch (err) {
