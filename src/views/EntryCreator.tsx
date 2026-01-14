@@ -10,7 +10,8 @@ import {
   GenerationRules,
   operateEntry,
   searchEntries,
-  showEntry
+  showEntry,
+  searchInApp
 } from '@/utils/keepassxc'
 import {
   mdiClipboardTextOutline,
@@ -99,6 +100,10 @@ export default class EntryCreator extends Component<any, EntryCreatorState> {
     )
   }
 
+  isAdded() {
+    return !!this.state.lastEntryName
+  }
+
   hasPassword() {
     return !!this.state.password
   }
@@ -140,6 +145,10 @@ export default class EntryCreator extends Component<any, EntryCreatorState> {
       NProgress.done()
       alert((this.isAdd() ? '添加' : '编辑') + '账号失败：' + getMessage(err))
     }
+  }
+
+  async handleShowInKeePassXC() {
+    await searchInApp(this.state.title, this.settingStore.state.password)
   }
 
   didMount() {
@@ -385,6 +394,15 @@ export default class EntryCreator extends Component<any, EntryCreatorState> {
               {this.isAdd() ? '添加' : '保存'}
             </Button>
           </FormItem>
+
+          {this.isAdded() ? (
+            <FormItem>
+              <Button
+                class="w-full bg-green-600 text-white"
+                onClick={() => this.handleShowInKeePassXC()}
+              >在 KeePassXC 中显示</Button>
+            </FormItem>
+          ) : null}
         </Form>
       </Fragment>
     )

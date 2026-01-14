@@ -26,21 +26,36 @@ function getInitialCLI() {
   return ''
 }
 
-export function initSetting() {
-  let setting = local.get<SettingModel>(StoreKey.SETTING)
+type SettingConfig = Omit<SettingModel, 'password'>
+
+export function initSetting(): SettingModel {
+  const setting = local.get<SettingConfig>(StoreKey.SETTING)
   if (setting === null) {
-    setting = {
-      version: 1,
+    const setting: SettingConfig = {
+      version: 2,
       database: '',
-      password: '',
       remember: false,
       keyFile: '',
       cli: getInitialCLI()
     }
+    const password = ''
     local.set(StoreKey.SETTING, setting)
+    utools.dbCryptoStorage.setItem(StoreKey.PASSWORD, password)
+    return { ...setting, password }
   }
-  setting.password = decrypt(setting.password, key)
-  return setting
+
+  if (setting.version === 1) {
+    const oldSetting = setting as SettingModel
+    oldSetting.version = 2
+    oldSetting.password = decrypt(oldSetting.password, key)
+    const { password, ...newSetting } = oldSetting
+    local.set(StoreKey.SETTING, newSetting)
+    utools.dbCryptoStorage.setItem(StoreKey.PASSWORD, password)
+    return oldSetting
+  }
+
+  const password: string = utools.dbCryptoStorage.getItem(StoreKey.PASSWORD)
+  return { ...setting, password }
 }
 
 export function saveSetting(setting: SettingModel) {

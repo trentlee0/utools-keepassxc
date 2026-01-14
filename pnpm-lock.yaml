@@ -20,7 +20,7 @@ specifiers:
   prettier-plugin-tailwindcss: ^0.3.0
   sass: ^1.62.1
   tailwindcss: ^3.3.2
-  utools-api-types: ^3.0.0
+  utools-api-types: ^7.5.1
   utools-utils: ^1.1.13
   vite: ^4.3.9
   vite-plugin-inject-css-to-file: ^1.0.0
@@ -48,7 +48,7 @@ devDependencies:
   prettier-plugin-tailwindcss: 0.3.0_prettier@2.8.8
   sass: 1.62.1
   tailwindcss: 3.3.2
-  utools-api-types: 3.0.0
+  utools-api-types: 7.5.1
   vite: 4.3.9_kaz2pwe3fkrbosuykbhgr7fqba
   vite-plugin-inject-css-to-file: 1.0.0_vite@4.3.9
 
@@ -1906,6 +1906,12 @@ packages:
 
   /@types/prettier/2.7.3:
     resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
+    dev: true
+
+  /@types/sharp/0.31.1:
+    resolution: {integrity: sha512-5nWwamN9ZFHXaYEincMSuza8nNfOof8nmO+mcI+Agx1uMUk4/pQnNIcix+9rLPXzKrm1pS34+6WRDbDV0Jn7ag==}
+    dependencies:
+      '@types/node': 18.16.16
     dev: true
 
   /@types/stack-utils/2.0.1:
@@ -3944,8 +3950,10 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
-  /utools-api-types/3.0.0:
-    resolution: {integrity: sha512-KJYytaX/cnxRTm+fBKeDAV6PhE1Emrv4bZm/6pigVhxEM4StAy8UFGyo22bVARSRIUUxbEdtWIo6O7qmEGnv5A==}
+  /utools-api-types/7.5.1:
+    resolution: {integrity: sha512-R7l7P/+c9g4sDlifxq6wrg+3p7Uc7L5XNOkk+xLGqm2EIk4zL16zwG5taxM3hbb5luK0yOBrqrN1zTzCl+h6rw==}
+    dependencies:
+      '@types/sharp': 0.31.1
     dev: true
 
   /utools-utils/1.1.13:
