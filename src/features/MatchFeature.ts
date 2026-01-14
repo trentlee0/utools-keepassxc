@@ -1,4 +1,4 @@
-import { EntryItem, getWindowTitle, searchEntries } from '@/utils/keepassxc'
+import { EntryItem, getWindowTitle, searchEntries, entryList } from '@/utils/keepassxc'
 import AbstractListFeature from './AbstractListFeature'
 import { Action, WindowPayload } from 'utools-utils'
 
@@ -53,7 +53,12 @@ export default class MatchFeature extends AbstractListFeature {
     if (!keyword) return []
     try {
       return await searchEntries(this.getOptions(), keyword)
-    } catch (err) {
+    } catch (e) {
+      const err = e as Error
+      if (err.message.trim() === 'No results for that search term.') {
+        utools.showNotification(`没有搜索到“${keyword}”，返回所有条目`)
+        return await entryList(this.getOptions())
+      }
       console.error(err)
       utools.showNotification(`搜索“${keyword}”时，出现错误：` + err)
       return []
